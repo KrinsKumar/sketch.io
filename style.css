@@ -1,4 +1,21 @@
-container {
-    height: 100px;
-    width: 100px;
+.container {
+    height: 400px;
+    width: 400px;
+    display: flex;
+}
+
+.container div {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+}
+
+.container div div {
+    border: 1px solid black;
+    flex-direction: row;
+    flex: 1 1 0;
+}
+
+.options {
+    margin-bottom: 6px;
 }
