@@ -19,3 +19,7 @@
 .options {
     margin-bottom: 6px;
 }
+
+#sliderInput {
+    width: 90%;
+}

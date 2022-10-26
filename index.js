@@ -3,20 +3,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // loading the DOM into the file
     let container = document.querySelector('.container');
     let slider = document.querySelector(`#sliderInput`);
-    let previousValue = slider.value
+    let previousValue = slider.value;
+    previousValue = parseInt(previousValue)
 
     // iniitial setup 
     document.querySelector(`.sliderValue`).innerHTML = slider.value;
     makeGrid(1);
-    selectBlack();
-    selectReset()
+    selectBlack();    // sets the default mode as black color
+    selectReset();    // makes sure that every cell is white
 
     // if slider is changed
     slider.addEventListener('input', function() {    // when sliders value is changed
         document.querySelector(`.sliderValue`).innerHTML = slider.value;
         makeGrid();
+        previousValue = slider.value    // updates the previous grid
+        previousValue = parseInt(previousValue)
         selection(document.querySelector(`#selected`));
-        previousValue = slider.value
     })
 
     // if options are clicked
@@ -43,19 +45,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // functions
 
     function makeGrid(flag = 0) {    // makes the grid for the selected range
-        value = slider.value
+        value = parseInt(slider.value);
         let previousGrid = document.querySelector(`#grid-holder`);
         if (flag === 0) {
-            if (parseInt(previousGrid.className) < value) { // adds in the grid
-                for (let i = 1; i <= parseInt(previousGrid.className); i++) {  // adds extra cells in existing rows
+            console.log(previousValue, value);
+            if (previousValue < value) { // adds in the grid
+                for (let i = 1; i <= previousValue; i++) {  // adds extra cells in existing rows
                     let existingRow = document.querySelector(`.row-${i}`);
-                    for(let j = parseInt(previousGrid.className) + 1; j <= value; j++) {
+                    for(let j =  previousValue + 1; j <= value; j++) {
                         cell = document.createElement('div');
                         cell.classList.add(`node-${i - 1}${j - 1}`);
-                        existingRow.appendChild(cell);    // appends the cells in the row
+                        existingRow.appendChild(cell);
                     }
                 }
-                for (let i = parseInt(previousGrid.className) + 1; i <= value; i++) {  // adds extra rows
+                for (let i = previousValue + 1; i <= value; i++) {  // adds extra rows
                     let row = document.createElement('div');
                     row.classList.add(`row-${i}`);
                     for(let j = 1; j <= value; j++) {
@@ -67,15 +70,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 previousGrid.classList.remove(previousValue);    // updates the class of the container
                 previousGrid.classList.add(value);
-
-            } else if (parseInt(previousGrid.className) > value) {    // removes from the grid
-                for (let i = 1; i < parseInt(previousGrid.className); i++) {  // removes extra cells in existing rows
-                    let existingRow = document.querySelector(`.row-${i}`);
-                    let lastCell = existingRow.querySelector(`.node-${i - 1}${parseInt(previousGrid.className) - 1}`);
-                    lastCell.remove();
-                }
-                for (let i = parseInt(previousGrid.className); i > value; i--) {  // adds extra rows
+            } else if (previousValue > value) {    // removes from the grid
+                console.log(`yes`);
+                for (let i = previousValue; i > value; i--) {  // adds extra rows
                     previousGrid.querySelector(`.row-${i}`).remove();
+                }
+                for (let i = 1; i <= value; i++) {  // removes extra cells in existing rows
+                    let existingRow = document.querySelector(`.row-${i}`);
+                    for(let j = value + 1; j <= previousValue; j++) { 
+                        let lastCell = existingRow.querySelector(`.node-${i - 1}${j - 1}`);
+                        lastCell.remove();
+                    }
                 }
                 previousGrid.classList.remove(previousValue);
                 previousGrid.classList.add(value);
@@ -169,5 +174,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 })
 
-// there is a glitch in the slider make grid when numbers are skipped in the slider
+// makeGrid is completed now
 // needed - invert, blur, erase, removeBorders 
