@@ -26,6 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector(`.random`).onclick = selectRandom;
     document.querySelector(`.custom`).onclick = selectCustom;
     document.querySelector(`.reset`).onclick = selectReset;
+    document.querySelector(`.eraser`).onclick = selectEraser;
+
 
 
 
@@ -103,12 +105,12 @@ document.addEventListener('DOMContentLoaded', function() {
             container.appendChild(grid);    // appends the div in the DOM
         } 
     }
-
     
     function selection(select) {    // calls the selected function again
         if (select.className === `black`) selectBlack(); 
         if (select.className === `random`) selectRandom(); 
         if (select.className === `custom`) selectCustom();
+        if (select.className === `eraser`) selectEraser();
     }
 
     function selectBlack() {    // fills black when cells are clicked
@@ -116,47 +118,41 @@ document.addEventListener('DOMContentLoaded', function() {
         if (previousSelected) previousSelected.id = null;
         document.querySelector(`.black`).id = `selected`;
         let grid = document.querySelector(`#grid-holder`);
-        if (grid) {
-            grid.querySelectorAll(`div`).forEach(function(row) {
-                row.querySelectorAll(`div`).forEach(function(cell) {
-                    cell.onclick = function() {
-                        if (cell.style.backgroundColor !== `white`) makeWhite(cell);
-                        else cell.style.backgroundColor = `black`;
-                    }
-                })
+        grid.querySelectorAll(`div`).forEach(function(row) {
+            row.querySelectorAll(`div`).forEach(function(cell) {
+                cell.onclick = function() {
+                    if (cell.style.backgroundColor !== `white`) makeWhite(cell);
+                    else cell.style.backgroundColor = `black`;
+                }
             })
-        }
+        })
     }
 
     function selectCustom() {
         let previousSelected = document.querySelector(`#selected`);
         if (previousSelected) previousSelected.id = null;
         document.querySelector(`.custom`).id = `selected`;
-
     }
 
     function selectRandom() {    // fills random when cells are clicked
         let previousSelected = document.querySelector(`#selected`);
-
         if (previousSelected) previousSelected.id = null;
         document.querySelector(`.random`).id = `selected`;
         let grid = document.querySelector(`#grid-holder`);
-        if (grid) {
-            grid.querySelectorAll(`div`).forEach(function(row) {
-                row.querySelectorAll(`div`).forEach(function(cell) {
-                    cell.onclick = function() {
-                        let red = Math.floor(Math.random() * 255);
-                        let green = Math.floor(Math.random() * 255);
-                        let blue = Math.floor(Math.random() * 255);
-                        if (cell.style.backgroundColor !== `white`) makeWhite(cell);
-                        else cell.style.backgroundColor = `rgb(${red}, ${blue}, ${green})`;
-                    }
-                })
+        grid.querySelectorAll(`div`).forEach(function(row) {
+            row.querySelectorAll(`div`).forEach(function(cell) {
+                cell.onclick = function() {
+                    let red = Math.floor(Math.random() * 255);
+                    let green = Math.floor(Math.random() * 255);
+                    let blue = Math.floor(Math.random() * 255);
+                    if (cell.style.backgroundColor !== `white`) makeWhite(cell);
+                    else cell.style.backgroundColor = `rgb(${red}, ${blue}, ${green})`;
+                }
             })
-        }
+        })
     }
 
-    function selectReset() {
+    function selectReset() {    // resets the grids
         let grid = document.querySelector(`#grid-holder`);
         if (grid) {
             grid.querySelectorAll(`div`).forEach(function(row) {
@@ -166,6 +162,20 @@ document.addEventListener('DOMContentLoaded', function() {
             })
         }
         selection(document.querySelector(`#selected`));
+    }
+
+    function selectEraser() {    // makes the cell white when clicked
+        let previousSelected = document.querySelector(`#selected`);
+        if (previousSelected) previousSelected.id = null;
+        document.querySelector(`.eraser`).id = `selected`;
+        let grid = document.querySelector(`#grid-holder`);
+        grid.querySelectorAll(`div`).forEach(function(row) {
+            row.querySelectorAll(`div`).forEach(function(cell) {
+                cell.onclick = function() {
+                     makeWhite(cell);
+                }
+            })
+        })
     }
 
     function makeWhite(cell) {

@@ -17,9 +17,45 @@
 }
 
 .options {
-    margin-bottom: 6px;
+    min-width: 40px;
+}
+
+.slider {
+    flex-basis: 50%;
+    display: flex;
+    justify-content: center;
+    
+}
+
+#selected {
+    background-color: #1bbb4980;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    width: 600px;
+    margin-bottom: 4px;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
 }
 
 #sliderInput {
-    width: 90%;
+    flex-basis: 80%;
+}
+
+.sliderValue {
+    height: 20.51px;
+    width: 30.80px;
+    border-color: black;
+    border-radius: 7px;
+    text-align: cen;
+}
+
+.sliderValue:hover {
+    background-color: #f0f0f0;
+    border-color: black;
 }
