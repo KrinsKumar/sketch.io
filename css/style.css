@@ -14,7 +14,6 @@ body {
     flex-direction: column;
     flex: 1 1 0;
 }
-
 #grid-holder > div {
     border-bottom: 1px solid rgba(139, 139, 139, 0.507);
     border-left: 1px solid rgba(139, 139, 139, 0.507);
@@ -66,22 +65,58 @@ body {
     justify-content: center;
 }
 
-
-
+.sliderValue {
+    width: 50px;
+    border-radius: 100px;
+    font-weight: 800;
+    font-size: larger;
+    background-color: #102542;
+    color: #F87060;
+    font-family: "Roboto Regular";
+    border: 2px solid #102542;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.24) 3px 3px 15px;
+}
 
 .slider {
     display: flex;
+    justify-content: center;
+    gap: 10px;
 }
 
 #sliderInput {
     flex-basis: 80%;
-    margin-bottom: 20px;
+    opacity: 0.9;
+    transition: opacity .2s;
+    width: 400px;
+    height: 15px;
+    appearance: none;
+    background: #102542;
+    outline: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 1);
+    align-self: center;
 }
+
+#sliderInput::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 4px solid #ffffff;
+    box-shadow: -407px 0 0 400px #F87060;
+}
+
+#sliderInput:hover {
+    opacity: 1;
+  }
 
 button {
     width: 100px;
     height: 50px;
-    border-radius: 100px;
+    border-radius: 50px;
     font-weight: 800;
     font-size: larger;
     background-color: #102542;
@@ -91,9 +126,23 @@ button {
     transition-property: background-color, color;
     transition-duration: 0.1s;
     transition-timing-function: ease-in;
+    box-shadow: rgba(0, 0, 0, 0.24) 3px 3px 15px;
 }
 
-#selected {
+.color-picker {
+    position: absolute;
+    opacity: 0;
+    transform: scale(2.1);
+    border-radius: 50px;
+    box-shadow: rgba(0, 0, 0, 0.24) 3px 3px 15px;
+}
+
+button:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+#selected, #high {
     background-color: #F87060;
     color: #102542;
     border: 2px solid #F87060;

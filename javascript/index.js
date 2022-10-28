@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let slider = document.querySelector(`#sliderInput`);
     let previousValue = parseInt(slider.value);
     let selected = 'black';
+    let currentColor;
 
 
     // iniitial setup 
@@ -43,12 +44,27 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     })
     document.querySelector(`.reset`).onclick = resetTheCells;
+    custom = document.querySelector(`.color-picker`);
+    custom.addEventListener('input', function(e) { 
+        currentColor = custom.value;
+        document.querySelector(`#selected`).style.backgroundColor = currentColor
+        document.querySelector(`#selected`).style.borderColor = currentColor
+
+    })
+    
 
     
     // if border button is pressed
-    document.querySelector(`#toggle-borders`).onclick = function() {
-        if (container.id === `not-border`) container.removeAttribute('id');
-        else container.id = `not-border`
+    border =  document.querySelector(`.toggle-borders`)
+    border.onclick = function() {
+        if (container.id === `not-border`) {
+            container.removeAttribute('id');
+            border.id = `high`
+        }
+        else {
+            container.id = `not-border`
+            border.removeAttribute('id');
+        }
     }
 
 
@@ -148,6 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // changes the color of the clicked cell
     function changeColor(e) {
+        console.log(currentColor, selected)
         if (e.type === 'mouseover' && !mouseDown) return
         if (selected === `black`) e.target.style.backgroundColor = `black`;
         if (selected === `random`) {
@@ -156,6 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let blue = Math.floor(Math.random() * 255);
             e.target.style.backgroundColor = `rgb(${red}, ${blue}, ${green})`;
         }
+        if (selected === `custom`) e.target.style.backgroundColor = currentColor;
         if (selected === `eraser`) e.target.style.backgroundColor = `white`
     }
 

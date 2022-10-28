@@ -6,20 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>rps.inventory</title>
     <link rel="stylesheet" href="/css/style.css">
-    
   </head>
   <body>
     <div class="main-content">
       <div class="options-container">
         <section class="options-button">
+          <button class="custom button-color"><input class="color-picker" type="color" value="#102542">Custom</button>
           <button id="selected" class="black button-color">Black</button>
           <button class="random button-color">Random</button>
-          <button class="custom button-color">Custom</button>
+          <button></button>
           <button class="eraser button-color">Eraser</button>
         </section>
         <section class="options-toggles"> 
           <button class="reset">Reset</button>
-          <button id="toggle-borders">Borders</button>
+          <button class="toggle-borders">Borders</button>
         </section>
       </div>
       <div class="input">
@@ -27,7 +27,7 @@
           <input id="sliderInput" type="range" min="1" max="30" value="10">
           <p class="sliderValue"></p>
         </section>
-        <section class="container"></section>
+        <section class="container" id="not-border"></section>
       </div>
     </div>
     <script src="/javascript/index.js"></script>
