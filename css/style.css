@@ -1,0 +1,100 @@
+body {
+    background-color: #d1d7e0;
+}
+
+.container {
+    height: 600px;
+    width: 600px;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.24) 3px 3px 15px;
+}
+
+.container > div {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+}
+
+#grid-holder > div {
+    border-bottom: 1px solid rgba(139, 139, 139, 0.507);
+    border-left: 1px solid rgba(139, 139, 139, 0.507);
+    display: flex;
+    flex: 1 1 0;
+}
+
+.row-1 {
+    border-top: 1px solid rgba(139, 139, 139, 0.507);
+}
+
+#grid-holder > div > div {
+    border-right: 1px solid rgba(139, 139, 139, 0.507);
+    flex: 1 1 0;
+}
+
+#not-border div div {
+    border-style: hidden;
+}
+
+.options {
+    min-width: 40px;
+}
+
+.options-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.options-button {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-evenly;
+}
+
+.options-toggles {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+}
+
+
+
+
+.slider {
+    display: flex;
+}
+
+#sliderInput {
+    flex-basis: 80%;
+    margin-bottom: 20px;
+}
+
+button {
+    width: 100px;
+    height: 50px;
+    border-radius: 100px;
+    font-weight: 800;
+    font-size: larger;
+    background-color: #102542;
+    color: #F87060;
+    font-family: "Roboto Regular";
+    border: 2px solid #102542;
+    transition-property: background-color, color;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in;
+}
+
+#selected {
+    background-color: #F87060;
+    color: #102542;
+    border: 2px solid #F87060;
+}
