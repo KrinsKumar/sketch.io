@@ -3,8 +3,10 @@ body {
 }
 
 .container {
-    height: 600px;
-    width: 600px;
+    max-height: 80vh;
+    max-width: 80vh;
+    height: 60vw;
+    width: 60vw;
     display: flex;
     box-shadow: rgba(0, 0, 0, 0.24) 3px 3px 15px;
 }
@@ -124,7 +126,7 @@ button {
     color: #F87060;
     font-family: "Roboto Regular";
     border: 2px solid #102542;
-    transition-property: background-color, color;
+    transition-property: background-color, color, border-color;
     transition-duration: 0.1s;
     transition-timing-function: ease-in;
     box-shadow: rgba(0, 0, 0, 0.24) 3px 3px 15px;

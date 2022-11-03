@@ -47,12 +47,13 @@ document.addEventListener('DOMContentLoaded', function() {
     custom = document.querySelector(`.color-picker`);
     custom.addEventListener('input', function(e) { 
         currentColor = custom.value;
-        document.querySelector(`#selected`).style.backgroundColor = currentColor
-        document.querySelector(`#selected`).style.borderColor = currentColor
+        document.querySelector(`#selected`).style.backgroundColor = currentColor;
+        document.querySelector(`#selected`).style.borderColor = currentColor;
+
+        if (isDark(currentColor)) document.querySelector(`.custom`).style.color = `#102542`;
+        else document.querySelector(`.custom`).style.color = `#F87060`;
 
     })
-    
-
     
     // if border button is pressed
     border =  document.querySelector(`.toggle-borders`)
@@ -83,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-// needed - invert, blur, erase, removeBorders, lighter, darker
+// needed - invert, blur, erase, removeBorders, lighter, darker, pattern
 
 
 
@@ -164,7 +165,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // changes the color of the clicked cell
     function changeColor(e) {
-        console.log(currentColor, selected)
         if (e.type === 'mouseover' && !mouseDown) return
         if (selected === `black`) e.target.style.backgroundColor = `black`;
         if (selected === `random`) {
@@ -186,7 +186,14 @@ document.addEventListener('DOMContentLoaded', function() {
         })
     }
 
-
+    function isDark(hexcolor) {
+        hexcolor = hexcolor.replace("#", '')
+        var r = parseInt(hexcolor.substr(0, 2), 16);
+        var g = parseInt(hexcolor.substr(2, 2), 16);
+        var b = parseInt(hexcolor.substr(4, 2), 16);
+        var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+        return (yiq >= 128) ? true : false;
+    }
 
 
 })
