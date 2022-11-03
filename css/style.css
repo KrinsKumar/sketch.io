@@ -14,6 +14,7 @@ body {
     flex-direction: column;
     flex: 1 1 0;
 }
+
 #grid-holder > div {
     border-bottom: 1px solid rgba(139, 139, 139, 0.507);
     border-left: 1px solid rgba(139, 139, 139, 0.507);
@@ -107,7 +108,7 @@ body {
     cursor: pointer;
     border: 4px solid #ffffff;
     box-shadow: -407px 0 0 400px #F87060;
-}
+    }
 
 #sliderInput:hover {
     opacity: 1;
@@ -142,7 +143,7 @@ button:hover {
     transform: scale(1.05);
 }
 
-#selected, #high {
+#selected {
     background-color: #F87060;
     color: #102542;
     border: 2px solid #F87060;
