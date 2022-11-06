@@ -8,9 +8,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let previousValue = parseInt(slider.value);
     let selected = 'black';
     let currentColor;
+    let patternSelected = false;
 
 
-    // iniitial setup 
+    // initial setup 
     document.querySelector(`.sliderValue`).innerHTML = slider.value;
     makeGrid(1);    // dynamically makes the grid
     let grid = document.querySelector(`#grid-holder`);
@@ -19,14 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // if slider is changed
-    slider.addEventListener('input', function() {    // when sliders value is changed
-        document.querySelector(`.sliderValue`).innerHTML = slider.value;
-        makeGrid();
-        previousValue = slider.value    // updates the previous grid
-        previousValue = parseInt(previousValue);
-        addDrawEvent();
-    })
-
+    slider.addEventListener('input', sliderChanged);
 
     // if a cell is clicked
     let mouseDown = false
@@ -34,11 +28,13 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.onmouseup = () => (mouseDown = false)
 
 
-    // if a button to change the option is clicked
+    // if a button to change the option is clicked, variable selected is changed
     document.querySelectorAll('.button-color').forEach( function(but) {
         but.onclick = function() {
             let previousSelected = document.querySelector(`#selected`);
-            if (previousSelected) previousSelected.removeAttribute('id');
+            if (previousSelected) {
+                previousSelected.removeAttribute('id');
+            } 
             selected = but.classList[0];
             document.querySelector(`.${selected}`).id = `selected`;
         }
@@ -52,23 +48,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (isDark(currentColor)) document.querySelector(`.custom`).style.color = `#102542`;
         else document.querySelector(`.custom`).style.color = `#F87060`;
-
     })
     
     // if border button is pressed
-    border =  document.querySelector(`.toggle-borders`)
+    let border = document.querySelector(`.toggle-borders`);
     border.onclick = function() {
         if (container.id === `not-border`) {
             container.removeAttribute('id');
-            border.id = `high`
+            border.id = `high`;
         }
         else {
-            container.id = `not-border`
+            container.id = `not-border`;
             border.removeAttribute('id');
         }
     }
 
-
+    // if pattern button is on 
+    let patternButton = document.querySelector(`.pattern`);
+    patternButton.onclick = function() {
+        if (patternSelected === false) {
+            patternSelected = true;
+            patternButton.id = `pattern-on`
+        } else {
+            patternSelected = false;
+            patternButton.removeAttribute('id');
+        }
+    }
 
 
 
@@ -91,6 +96,15 @@ document.addEventListener('DOMContentLoaded', function() {
 // done functions
 
     // makes the grid for the selected range
+
+    function sliderChanged() {    // when sliders value is changed
+        document.querySelector(`.sliderValue`).innerHTML = slider.value;
+        makeGrid();
+        previousValue = slider.value    // updates the previous grid
+        previousValue = parseInt(previousValue);
+        addDrawEvent();
+    }
+
     function makeGrid(flag = 0) {    
         value = parseInt(slider.value);
         let previousGrid = document.querySelector(`#grid-holder`);
@@ -100,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     let existingRow = document.querySelector(`.row-${i}`);
                     for(let j =  previousValue + 1; j <= value; j++) {
                         cell = document.createElement('div');
-                        cell.classList.add(`node-${i - 1}${j - 1}`);
+                        cell.classList.add(`node-${i - 1}_${j - 1}`);
                         cell.style.backgroundColor = `white`;
                         existingRow.appendChild(cell);
                     }
@@ -110,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     row.classList.add(`row-${i}`);
                     for(let j = 1; j <= value; j++) {
                         cell = document.createElement('div');
-                        cell.classList.add(`node-${i - 1}${j - 1}`);
+                        cell.classList.add(`node-${i - 1}_${j - 1}`);
                         cell.style.backgroundColor = `white`;
                         row.appendChild(cell);    // appends the cells in the row
                     }
@@ -125,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 for (let i = 1; i <= value; i++) {  // removes extra cells in existing rows
                     let existingRow = document.querySelector(`.row-${i}`);
                     for(let j = value + 1; j <= previousValue; j++) { 
-                        let lastCell = existingRow.querySelector(`.node-${i - 1}${j - 1}`);
+                        let lastCell = existingRow.querySelector(`.node-${i - 1}_${j - 1}`);
                         lastCell.remove();
                     }
                 }
@@ -141,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 row.classList.add(`row-${i}`);
                 for(let j = 1; j <= value; j++) {
                     cell = document.createElement('div');
-                    cell.classList.add(`node-${i - 1}${j - 1}`);
+                    cell.classList.add(`node-${i - 1}_${j - 1}`);
                     row.appendChild(cell);    // appends the cells in the row
                 }
                 grid.appendChild(row);    // appends the whole row in the div
@@ -166,15 +180,37 @@ document.addEventListener('DOMContentLoaded', function() {
     // changes the color of the clicked cell
     function changeColor(e) {
         if (e.type === 'mouseover' && !mouseDown) return
-        if (selected === `black`) e.target.style.backgroundColor = `black`;
+        if (selected === `black`) {
+            if (patternSelected === true) {
+                patternOn(e, `black`);
+                return;
+            } 
+            e.target.style.backgroundColor = `black`;
+        } 
         if (selected === `random`) {
             let red = Math.floor(Math.random() * 255);
             let green = Math.floor(Math.random() * 255);
             let blue = Math.floor(Math.random() * 255);
+            if (patternSelected === true) {
+                patternOn(e, `rgb(${red}, ${blue}, ${green})`);
+                return;
+            } 
             e.target.style.backgroundColor = `rgb(${red}, ${blue}, ${green})`;
         }
-        if (selected === `custom`) e.target.style.backgroundColor = currentColor;
-        if (selected === `eraser`) e.target.style.backgroundColor = `white`
+        if (selected === `custom`) {
+            if (patternSelected === true) {
+                patternOn(e, currentColor);
+                return;
+            } 
+            e.target.style.backgroundColor = currentColor;
+        }
+        if (selected === `eraser`) {
+            if (patternSelected === true) {
+                patternOn(e, `white`);
+                return;
+            } 
+            e.target.style.backgroundColor = `white`;
+        }
     }
 
     function addDrawEvent() {
@@ -195,5 +231,27 @@ document.addEventListener('DOMContentLoaded', function() {
         return (yiq >= 128) ? true : false;
     }
 
+    function patternOn(e , color) {
+        // makes sure that the slider is an even number
+        if (slider.value % 2 !== 0) {
+            slider.value++;
+            sliderChanged();
+        }
+        e.target.style.backgroundColor = color;
+        let col = e.target.classList[0].split(`_`)[1];
+        let row = e.target.classList[0].split(`_`)[0].split(`-`)[1];
+
+        // print the pattern in the opposite side of the same row
+        document.querySelector(`.node-${row}_${slider.value - col - 1}`)
+            .style.backgroundColor = color;
+
+        // print the pattern on the opposite side of the same column
+        document.querySelector(`.node-${slider.value - row - 1}_${col}`)
+             .style.backgroundColor = color;
+
+        // print the pattern on the opposite side
+        document.querySelector(`.node-${slider.value - row - 1}_${slider.value - col - 1}`)
+            .style.backgroundColor = color;
+    }
 
 })

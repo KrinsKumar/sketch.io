@@ -9,6 +9,7 @@ body {
     width: 60vw;
     display: flex;
     box-shadow: rgba(0, 0, 0, 0.24) 3px 3px 15px;
+    margin: 0 auto;
 }
 
 .container > div {
@@ -103,7 +104,7 @@ body {
 }
 
 #sliderInput::-webkit-slider-thumb {
-    -webkit-appearance: none;
+    appearance: none;
     width: 15px;
     height: 15px;
     border-radius: 50%;
@@ -145,7 +146,9 @@ button:hover {
     transform: scale(1.05);
 }
 
-#selected {
+#selected,
+#high,
+#pattern-on {
     background-color: #F87060;
     color: #102542;
     border: 2px solid #F87060;
