@@ -8,3 +8,5 @@ A webpage where you can doodle on a custom grid.
   * 4- `Eraser` and `Reset` can help you clean the grid.
   
 #### That's everything. There are more buttons with cool features, play with them to find out what they do.
+
+Will add a backend where the progress can be saved locally on the broweser.
